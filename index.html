@@ -55,6 +55,7 @@ nav.scrolled{background:rgba(5,5,7,.85);backdrop-filter:blur(20px) saturate(1.4)
   max-width:1120px;margin:0 auto;
   display:flex;justify-content:space-between;align-items:center;
   height:68px;
+  position:relative;
 }
 .nav-name{font-weight:800;font-size:1.05rem;letter-spacing:-.3px;white-space:nowrap}
 .nav-name span{color:#818cf8}
@@ -69,7 +70,10 @@ nav.scrolled{background:rgba(5,5,7,.85);backdrop-filter:blur(20px) saturate(1.4)
   background:#818cf8;transform:scaleX(0);transform-origin:left;transition:transform .35s ease;
 }
 .nav-links a:hover::after{transform:scaleX(1)}
-.hamburger{display:none;background:none;border:none;color:#e4e4e7;cursor:pointer;padding:4px}
+.hamburger{
+  display:none;background:none;border:none;color:#e4e4e7;
+  cursor:pointer;padding:8px;z-index:101;
+}
 .hamburger svg{width:24px;height:24px}
 
 /* ===== Parallax image sections ===== */
@@ -347,21 +351,48 @@ footer span{color:#818cf8}
   .certs-grid{grid-template-columns:1fr}
 }
 @media(max-width:768px){
+  /* Hide desktop nav, show hamburger */
   .nav-links{
-    position:fixed;top:68px;left:0;right:0;
-    flex-direction:column;background:rgba(5,5,7,.97);backdrop-filter:blur(20px);
-    padding:24px 32px 32px;gap:18px;border-bottom:1px solid rgba(255,255,255,.06);
-    transform:translateY(-110%);transition:transform .4s cubic-bezier(.4,0,.2,1);z-index:99;
+    position:fixed;top:68px;right:0;left:auto;
+    flex-direction:column;background:rgba(5,5,7,.98);backdrop-filter:blur(20px);
+    padding:24px 32px 32px;gap:0;border-bottom:1px solid rgba(255,255,255,.06);
+    border-left:1px solid rgba(255,255,255,.06);
+    width:240px;align-items:stretch;
+    transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);
+    z-index:99;margin:0;
   }
-  .nav-links.open{transform:translateY(0)}
+  .nav-links.open{transform:translateX(0)}
+  .nav-links li{border-bottom:1px solid rgba(255,255,255,.04)}
+  .nav-links li:last-child{border-bottom:none}
+  .nav-links a{
+    display:block;padding:16px 0;font-size:.9rem;
+  }
+  .nav-links a::after{display:none}
   .hamburger{display:block}
+
+  /* Force nav-inner to stay visible and stack properly */
+  nav{padding:0 20px;background:rgba(5,5,7,.6);backdrop-filter:blur(8px)}
+  .nav-inner{height:60px}
+  .nav-name{font-size:.95rem}
+
   .about-grid{grid-template-columns:1fr}
   .about-aside{flex-direction:row;flex-wrap:wrap}
   .about-aside .info-card{flex:1;min-width:140px}
   .skills-layout{grid-template-columns:1fr}
+  .hero{padding-top:60px}
   .hero h1{font-size:clamp(2rem,8vw,3rem)}
   .hero-name{font-size:clamp(.9rem,3vw,1.1rem)}
+  .hero-content{padding:60px 0 40px}
   .visual-break{height:30vh;min-height:220px}
+  section{padding:80px 0}
+  .edu-block,.exp-block,.proj{padding:24px 22px}
+  .certs-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .nav-name{font-size:.85rem}
+  .wrap{padding:0 20px}
+  .hero-status{font-size:.7rem;padding:6px 12px}
+  .btn{padding:12px 22px;font-size:.82rem}
 }
 </style>
 </head>
@@ -408,7 +439,7 @@ footer span{color:#818cf8}
       <div class="hero-actions">
         <a href="#projects" class="btn btn-fill">See my work</a>
         <a href="#contact" class="btn btn-outline">Contact me</a>
-        <a href="assets/charan badampudi resume.pdf" download class="btn btn-outline">
+        <a href="Resume_Main.pdf" download class="btn btn-outline">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download Resume
         </a>
@@ -450,17 +481,17 @@ footer span{color:#818cf8}
         <div class="info-card reveal d2">
           <div class="label">Projects Built</div>
           <div class="value">7</div>
-          <div class="sub">NLP · Vision · Audio · Analytics</div>
+          <div class="sub">AI/ML · Data Science · Web Application · Data Analytics</div>
         </div>
         <div class="info-card reveal d3">
           <div class="label">Certifications</div>
           <div class="value">5</div>
-          <div class="sub">AI · Python · SQL · Data</div>
+          <div class="sub">AI · Python · Java · SQL · Data Science</div>
         </div>
         <div class="info-card reveal d4">
           <div class="label">Internship</div>
           <div class="value">Aenexz Tech</div>
-          <div class="sub">Data Science · Bangalore</div>
+          <div class="sub">Data Science & Analytics · Bangalore</div>
         </div>
       </div>
     </div>
@@ -487,9 +518,9 @@ footer span{color:#818cf8}
     </div>
     <div class="skills-layout">
       <div class="skill-group reveal d1">
-        <h3><span>🧠</span> Machine Learning &amp; DL</h3>
+        <h3><span>🧠</span> Machine Learning </h3>
         <div class="tag-list">
-          <span class="tag">Scikit-learn</span><span class="tag">PyTorch</span><span class="tag">HuggingFace</span><span class="tag">YOLOv8</span><span class="tag">BERT</span><span class="tag">BLIP</span><span class="tag">Deep Learning</span>
+          <span class="tag">Scikit-learn</span><span class="tag">PyTorch</span><span class="tag">HuggingFace</span><span class="tag">Deep Learning</span>
         </div>
       </div>
       <div class="skill-group reveal d2">
@@ -501,19 +532,19 @@ footer span{color:#818cf8}
       <div class="skill-group reveal d3">
         <h3><span>📊</span> Data Science &amp; Analytics</h3>
         <div class="tag-list">
-          <span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag">EDA</span><span class="tag">Feature Engineering</span><span class="tag">Statistical Analysis</span>
+          <span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag">Statistical Analysis</span>
         </div>
       </div>
       <div class="skill-group reveal d1">
         <h3><span>💻</span> Languages &amp; Databases</h3>
         <div class="tag-list">
-          <span class="tag">Python</span><span class="tag">Java</span><span class="tag">SQL</span><span class="tag">MySQL</span>
+          <span class="tag">Python</span><span class="tag">Java</span><span class="tag">MySQL</span>
         </div>
       </div>
       <div class="skill-group reveal d2">
         <h3><span>🚀</span> Deployment &amp; Web</h3>
         <div class="tag-list">
-          <span class="tag">Streamlit</span><span class="tag">Flask</span><span class="tag">HTML</span><span class="tag">CSS</span>
+          <span class="tag">Streamlit</span><span class="tag">HTML</span><span class="tag">CSS</span>
         </div>
       </div>
       <div class="skill-group reveal d3">
@@ -725,7 +756,7 @@ footer span{color:#818cf8}
 </section>
 
 <footer>
-  <div class="wrap">Built by <span>Charan Badampudi</span> · 2025</div>
+  <div class="wrap">Built by <span>Charan Badampudi</span> · 2026</div>
 </footer>
 
 <script>
@@ -797,11 +828,23 @@ window.addEventListener('scroll',function(){
 // ===== Mobile menu =====
 var hamburger=document.getElementById('hamburger');
 var navLinks=document.getElementById('navLinks');
-hamburger.addEventListener('click',function(){navLinks.classList.toggle('open');});
+hamburger.addEventListener('click',function(e){
+  e.stopPropagation();
+  navLinks.classList.toggle('open');
+});
+// Close menu when a link is clicked
 var links=navLinks.querySelectorAll('a');
 for(var i=0;i<links.length;i++){
-  links[i].addEventListener('click',function(){navLinks.classList.remove('open');});
+  links[i].addEventListener('click',function(){
+    navLinks.classList.remove('open');
+  });
 }
+// Close menu when clicking outside
+document.addEventListener('click',function(e){
+  if(!navLinks.contains(e.target)&&!hamburger.contains(e.target)){
+    navLinks.classList.remove('open');
+  }
+});
 
 // ===== Scroll reveal =====
 var reveals=document.querySelectorAll('.reveal');
